@@ -15,8 +15,8 @@
                     </div>
                     <div class="modal-footer">
                         <div class="row w-100 justify-content-spacebetween">
-                            <div class="col-6"><a :href="messageId" class="btn btn-secondary btn-block">Annuler</a></div>
-                            <div class="col-6"><button type="submit" @click.prevent="createComment()" class="btn btn-success btn-block">Confirmer</button></div>
+                            <div class="col-6"><button @click.prevent="redirectMessage()" class="btn btn-secondary btn-block">Annuler</button></div>
+                            <div class="col-6"><button type="submit" @click.prevent="createComments()" class="btn btn-success btn-block">Confirmer</button></div>
                         </div>
                     </div>
                 </form>
@@ -43,10 +43,11 @@ export default {
         }
     },
     methods: {
-        createComment() {
-            axios.post("http://127.0.0.1:3000/api/comments/", {"comment":this.createComment}, {headers: { "Authorization":"Bearer " + localStorage.getItem("token") }})
+        createComments() {
+            let usId = localStorage.getItem("userId")
+            axios.post("http://127.0.0.1:3000/api/comments/", {"MessageId": this.$route.params.id, "UserId": usId, "comment":this.createComment}, {headers: { "Authorization":"Bearer " + localStorage.getItem("token") }})
             .then(res => {
-                if (res.status === 200) {
+                if (res.status === 201) {
                     Swal.fire({
                         text: "Le commentaire à été créer !",
                         footer: "Redirection en cours...",
@@ -54,7 +55,7 @@ export default {
                         timer: 1500,
                         showConfirmButton: false,
                         timerProgressBar: true,
-                        willClose: () => { router.push(this.messageId.slice(1)); this.messageId = "" }
+                        willClose: () => { router.push("/commentaires/" + this.$route.params.id )}
                     })
                 }
             })
@@ -74,6 +75,9 @@ export default {
                     timerProgressBar: true
                 })  
             })
+        },
+        redirectMessage() {
+            router.push("/commentaires/" + this.$route.params.id)
         }
     },
 }

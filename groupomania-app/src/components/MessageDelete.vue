@@ -20,7 +20,7 @@
                     <div class="modal-footer">
                         <div class="row w-100 justify-content-spacebetween">
                             <div class="col-6"><a href="#/messages" class="btn btn-secondary btn-block">Annuler</a></div>
-                            <div class="col-6"><button type="submit" @click.prevent="deleteMessage()" class="btn btn-success btn-block">Confirmer</button></div>
+                            <div class="col-6"><button type="submit" @click.prevent="deleteMessages()" class="btn btn-success btn-block">Confirmer</button></div>
                         </div>
                     </div>
                 </form>
@@ -47,7 +47,7 @@ export default {
         }
     },
     methods: {
-        deleteMessage() {
+        deleteMessages() {
             axios.delete("http://127.0.0.1:3000/api/messages/" + this.$route.params.id, { headers: { "Authorization":"Bearer " + localStorage.getItem("token") }})
             .then(res=> {
                 if (res.status === 200) {
@@ -80,6 +80,50 @@ export default {
             })
         }
     },
+    beforeMount() {
+        axios.get("http://127.0.0.1:3000/api/messages/" + this.$route.params.id, { headers: {"Authorization": "Bearer " + localStorage.getItem("token")} })
+        .then(res => {
+            this.deleteUserId = res.data.userId
+            if (this.deleteUserId == localStorage.getItem("userId"))  {
+                this.deleteTag = "( Utilisateur : " + res.data.userName + " )"
+                this.deleteMessage = res.data.message
+                this.newImage = res.data.messageUrl
+            } else if ( localStorage.getItem("role") == "true") {
+                this.deleteTag = "( Administrateur : " + localStorage.getItem("userName") + " )"
+                this.deleteMessage = res.data.message
+                this.newImage = res.data.messageUrl
+                this.deleteorColor = "text-danger"
+            } else {
+                Swal.fire({
+                    title: "Une erreur est survenue",
+                    text: "Vous n'avez pas accès à cette fonctionnalité !",
+                    icon: "error",
+                    timer: 1500,
+                    showConfirmButton: false,
+                    timerProgressBar: true,
+                    willClose: () => { router.push("/messages") }
+                })  
+            }
+        })
+        .catch(function(error) {
+            const codeError = error.message.split("code ")[1]
+            let messageError = ""
+            switch (codeError){
+                case "400": messageError = "Le message n'a pas été mis à jour !"; break
+                case "401": messageError = "Requête non-authentifiée !"; break
+                case "404": messageError = "Le message n'existe pas !"; break
+            }
+            Swal.fire({
+                title: "Une erreur est survenue",
+                text: messageError || error.message,
+                icon: "error",
+                timer: 1500,
+                showConfirmButton: false,
+                timerProgressBar: true,
+                willClose: () => { router.push("/messages") }
+            })  
+        })
+    }
 }
 </script>
 

@@ -60,11 +60,13 @@ export default {
         },
         createMessages() {
             const formData = new FormData()
+            let usId = localStorage.getItem("userId")
+            formData.set("UserId", usId)
             formData.set("image", this.file)
             formData.set("message", this.createMessage.toString())
             axios.post("http://127.0.0.1:3000/api/messages/", formData, { headers: { "Authorization":"Bearer " + localStorage.getItem("token")}})
             .then(res=> {
-                if (res.status === 200) {
+                if (res.status === 201) {
                     Swal.fire({
                         text: "Le message à été créer !",
                         footer: "Redirection en cours...",

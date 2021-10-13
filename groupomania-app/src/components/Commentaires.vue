@@ -35,7 +35,7 @@
                     <!-- FIN DU MESSAGE -->
                 </div>
                 <div class="col-12 col-md-10 col-lg-8">
-                    <a href="" data-toggle="modal" data-target="#modalAddComment" class="my-2 btn btn-sm btn-block btn-success">Poster un commentaire...</a>
+                    <a :href="'#/commentaire/create/' + oneMessage.id" data-toggle="modal" data-target="#modalAddComment" class="my-2 btn btn-sm btn-block btn-success">Poster un commentaire...</a>
                     <div class="modal fade" id="modalAddComment" tabindex="-1" aria-labelledby="modalAddComment" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -100,39 +100,6 @@ export default {
             isActive: true,
             oneMessage: [],
             comments: [],
-        }
-    },
-    methods: {
-        addNewComment() {
-            this.submitted = true
-            axios.post("http://127.0.0.1:3000/api/comments/", { "MessageId": this.$route.params.id, "UserId": this.currentUserId, "comment": this.newComment }, { headers: { "Authorization": "Bearer " + localStorage.getItem("token")}})
-            .then(()=> {
-                Swal.fire({
-                    text: "Commentaire ajouté !",
-                    footer: "Redirection en cours...",
-                    icon: "success",
-                    timer: 1000,
-                    showConfirmButton: false,
-                    timerProgressBar: true,
-                    willClose: () => { location.reload() }
-                })
-            })
-            .catch(function(error) {
-                const codeError = error.message.split("code ")[1]
-                let messageError = ""
-                switch (codeError){
-                    case "400": messageError = "Le message n'a pas été ajouté !"; break
-                    case "401": messageError = "Requête non-authentifiée !"; break
-                }
-                Swal.fire({
-                    title: "Une erreur est survenue",
-                    text: messageError || error.message,
-                    icon: "error",
-                    timer: 1500,
-                    showConfirmButton: false,
-                    timerProgressBar: true
-                })  
-            })
         }
     },
     created: function () {

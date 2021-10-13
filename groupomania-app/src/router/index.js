@@ -58,7 +58,7 @@ const routes = [
         component: () => import("../components/CommentaireModify")
     },
     {
-        path: "/commentaire/create/",
+        path: "/commentaire/create/:id",
         name: "Commentaires Create",
         component: () => import("../components/CommentaireCreate")
     },

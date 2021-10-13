@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-10 col-lg-8" id="allMessages">
-                    <a  href="#/message/create/" data-toggle="modal" data-target="#modalAddMessage" class="my-2 btn btn-sm btn-block btn-success">Poster un message...</a>
+                    <a  href="#/message/create" data-toggle="modal" data-target="#modalAddMessage" class="my-2 btn btn-sm btn-block btn-success">Poster un message...</a>
                     <div class="modal fade" id="modalAddMessage" tabindex="-1" aria-labelledby="modalAddMessage" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -90,49 +90,6 @@ export default {
             newMessage: "",
             file: null,
             messages: [],
-        }
-    },
-    methods: {
-        onFileChange() {
-            this.file = this.$refs.file.files[0];
-            this.newImage = URL.createObjectURL(this.file)
-        },
-        addNewMessage() {
-            const formData = new FormData()
-            formData.set("image", this.file)
-            formData.set("UserId", this.currentUserId.toString())
-            formData.set("message", this.newMessage.toString())
-            axios.post("http://127.0.0.1:3000/api/messages/", formData, { headers: { "Authorization":"Bearer " + localStorage.getItem("token")}})
-            .then(()=> {
-                this.UserId = ""
-                this.newMessage = ""
-                this.file = null
-                Swal.fire({
-                    text: "Message posté !",
-                    footer: "Redirection en cours...",
-                    icon: "success",
-                    timer: 2000,
-                    showConfirmButton: false,
-                    timerProgressBar: true,
-                    willClose: () => { location.reload() }
-                })
-            })
-            .catch((error)=>{
-                const codeError = error.message.split("code ")[1]
-                let messageError = ""
-                switch (codeError){
-                    case "400": messageError = "Le message n'a pas été posté !"; break
-                    case "401": messageError = "Requête non-authentifiée !"; break
-                }
-                Swal.fire({
-                    title: "Une erreur est survenue",
-                    text: messageError || error.message,
-                    icon: "error",
-                    timer: 3500,
-                    showConfirmButton: false,
-                    timerProgressBar: true
-                }) 
-            })
         }
     },
     created: function() {
