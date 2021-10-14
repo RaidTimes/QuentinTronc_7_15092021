@@ -1,11 +1,11 @@
 <template>
     <div id="navbarContent" class="m-0 p-0 justify-content-end align-self-center">
         <div class="nav-item dropdown m-0 p-0">
-            <a class="nav-item nav-link m-0 p-0" href="#" data-toggle="dropdown" id="my_account" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-item nav-link m-0 p-0" href="#/compte/" data-toggle="dropdown" id="my_account" aria-haspopup="true" aria-expanded="false">
                 <img :src="avatar" alt="Image de profile" height="37" class="my-0 rounded-circle"/>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="my_account">
-                <p class="h5 dropdown-item-text">{{ userName}}</p>
+                <p class="h5 dropdown-item-text">{{ userName }}</p>
                 <div class="dropdown-divider"></div>
                 <div class="d-flex"><img src="../assets/modify.svg" fill="text-primary" alt="Mon compte" class="pl-4"><router-link to="/compte" class="dropdown-item pl-2">Mon compte</router-link></div>
                 <div class="d-flex"><img src="../assets/mail.svg" fill="text-primary" alt="Ecrire un message" class="pl-4"><router-link to="/compte/messages" class="dropdown-item pl-2">Mes messages</router-link></div>
@@ -24,7 +24,7 @@ export default {
     data() {
         return {
             userName: "", 
-            avatar: "/images/avatars/user.jpg"
+            avatar: "http://127.0.0.1:3000/images/avatars/user.png"
         }
     },
     created: function() {

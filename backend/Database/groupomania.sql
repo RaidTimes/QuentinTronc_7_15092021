@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`id`, `userName`, `email`, `password`, `avatar`, `isAdmin`, `isActive`, `createdAt`, `updatedAt`) VALUES
 (1, 'Admin', 'administrateur@groupomania.fr', '$2a$12$QjGAGJDGN1C1tKBXfFJw9OVHjqzFBiVL/mdKrzbJuDYIWTpJcKJxu', 'http://127.0.0.1:3000/images/administrateur.png', 1, 1, '2021-10-10 02:01:39', '2021-10-10 12:15:20'),
-(2, 'Quentin', 'test@test.fr', '$2b$10$79lZMJQEbkwhpYGHe5zRS.AbPXt2jWyShpkYmjgohYD8U7T8wLFMq', 'http://127.0.0.1:3000/images/avatars/user.png', 0, 1, '2021-10-10 12:33:11', '2021-10-10 12:35:38');
+(2, 'Test', 'test@test.fr', '$2b$10$79lZMJQEbkwhpYGHe5zRS.AbPXt2jWyShpkYmjgohYD8U7T8wLFMq', 'http://127.0.0.1:3000/images/avatars/user.png', 0, 1, '2021-10-10 12:33:11', '2021-10-10 12:35:38');
 
 --
 -- Contraintes pour les tables déchargées
