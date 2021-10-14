@@ -16,7 +16,6 @@ Créez un réseau social d’entreprise pour la société Groupomania
 ### 1. Prérequis
 
 - Vous devez installer [Node et npm](https://visualstudio.microsoft.com/fr/vs/features/node-js/) localement sur votre ordinateur.
-  (cf boite à outils)
 
 - Pour les utilisateurs [Visual Studio Code](https://code.visualstudio.com/) de windows, l'installation de [Visual Studio C++](https://docs.microsoft.com/fr-fr/cpp/build/vscpp-step-0-installation?view=vs-2019#:~:text=Open%20the%20program%20from%20the,Visual%20C%2B%2B%20components%20to%20install.) et de [node.js tool pour visual studio](https://visualstudio.microsoft.com/fr/vs/features/node-js/) vous sera nécessaire.
 
